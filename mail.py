@@ -1,4 +1,4 @@
-"""Simplifies creation and sending of email."""
+"""Simplifies creation and sending complex email."""
 
 from mimetypes import guess_type
 from smtplib import SMTP
@@ -7,8 +7,8 @@ from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
     
     
-def sendmail(from_email, to_email, subject, 
-             text=None, html=None, attachment=None):
+def make(from_email, to_email, subject, 
+         text=None, html=None, attachment=None):
     if text:
         text_msg =  MIMEText(text, 'plain', 'utf-8')
     if html:
@@ -45,7 +45,10 @@ def sendmail(from_email, to_email, subject,
     msg['Subject'] = subject
     msg['From'] = from_email
     msg['To'] = to_email
+    return msg
     
+    
+def send(msg):
     s = SMTP('localhost')
     s.send_message(msg)
     s.quit()
