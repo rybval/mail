@@ -5,9 +5,9 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
 from smtplib import SMTP
-    
-    
-def make(from_email, to_email, subject, 
+
+
+def make(from_email, to_email, subject,
          text=None, html=None, attachment=None):
     if text:
         text_msg =  MIMEText(text, 'plain', 'utf-8')
@@ -21,9 +21,9 @@ def make(from_email, to_email, subject,
         if maintype != 'application':
             maintype, subtype = 'application', 'octet-stream'
         attached_msg = MIMEApplication(attachment['data'], subtype)
-        attached_msg.add_header('Content-Disposition', 'attachment', 
+        attached_msg.add_header('Content-Disposition', 'attachment',
                                 filename = attachment['name'])
-    
+
     if text and html:
         alter_msg = MIMEMultipart('alternative')
         alter_msg.attach(text_msg)
@@ -35,19 +35,19 @@ def make(from_email, to_email, subject,
         msg = html_msg
     else:
         msg = MIMEText('', 'plain')
-        
+
     if attachment:
         content_msg = msg
         msg = MIMEMultipart()
         msg.attach(content_msg)
         msg.attach(attached_msg)
-        
+
     msg['Subject'] = subject
     msg['From'] = from_email
     msg['To'] = to_email
     return msg
-    
-    
+
+
 def send(msg):
     s = SMTP('localhost')
     s.send_message(msg)
