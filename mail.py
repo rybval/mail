@@ -1,10 +1,10 @@
 """Simplifies creation and sending complex email."""
 
 from mimetypes import guess_type
-from smtplib import SMTP
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
+from smtplib import SMTP
     
     
 def make(from_email, to_email, subject, 
